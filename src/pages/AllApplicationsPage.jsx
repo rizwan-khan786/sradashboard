@@ -1,11 +1,9 @@
 "use client"
 import { useState, useEffect } from "react"
 
-// Configuration
-const API_BASE_URL = "http://localhost:4200"
-const DOCUMENT_BASE_URL = "http://localhost:4200" // Base URL for documents
+const API_BASE_URL = "http://13.203.251.59:4200"
+const DOCUMENT_BASE_URL = "http://13.203.251.59:4200" 
 
-// Authentication utilities
 const isAuthenticated = () => {
   if (typeof window === "undefined") return false
   const token = localStorage.getItem("authToken")
@@ -27,7 +25,6 @@ const AllApplicationsPage = () => {
   const [selectedDocument, setSelectedDocument] = useState(null)
   const [showDocumentModal, setShowDocumentModal] = useState(false)
 
-  // Extract document path from full path (from /uploads onwards)
   const extractDocumentPath = (fullPath) => {
     if (!fullPath) return null
     const uploadsIndex = fullPath.indexOf("/uploads")
@@ -37,37 +34,31 @@ const AllApplicationsPage = () => {
     return fullPath
   }
 
-  // Get full document URL
   const getDocumentUrl = (documentPath) => {
     if (!documentPath) return null
     const cleanPath = extractDocumentPath(documentPath)
     return cleanPath ? `${DOCUMENT_BASE_URL}${cleanPath}` : null
   }
 
-  // Get file extension
   const getFileExtension = (filePath) => {
     if (!filePath) return ""
     return filePath.split(".").pop().toLowerCase()
   }
 
-  // Check if file is image
   const isImageFile = (filePath) => {
     const imageExtensions = ["jpg", "jpeg", "png", "gif", "bmp", "webp"]
     return imageExtensions.includes(getFileExtension(filePath))
   }
 
-  // Check if file is video
   const isVideoFile = (filePath) => {
     const videoExtensions = ["mp4", "avi", "mov", "wmv", "flv", "webm"]
     return videoExtensions.includes(getFileExtension(filePath))
   }
 
-  // Check if file is PDF
   const isPdfFile = (filePath) => {
     return getFileExtension(filePath) === "pdf"
   }
 
-  // Fetch data from API
   useEffect(() => {
     const fetchApplications = async () => {
       try {
@@ -107,7 +98,6 @@ const AllApplicationsPage = () => {
     fetchApplications()
   }, [])
 
-  // Filter applications based on search term
   const filteredApplications = applications.filter((app) => {
     const searchString = searchTerm.toLowerCase()
     return (
@@ -119,7 +109,6 @@ const AllApplicationsPage = () => {
     )
   })
 
-  // Get family members from application data
   const getFamilyMembers = (app) => {
     const members = []
     for (let i = 1; i <= 6; i++) {
@@ -135,7 +124,6 @@ const AllApplicationsPage = () => {
     return members
   }
 
-  // Get all document fields with proper URLs
   const getDocuments = (app) => {
     const docs = []
     const docFields = [
@@ -181,7 +169,6 @@ const AllApplicationsPage = () => {
     return docs
   }
 
-  // Format field name for display
   const formatFieldName = (fieldName) => {
     return fieldName
       .replace(/_/g, " ")
@@ -192,7 +179,6 @@ const AllApplicationsPage = () => {
       .trim()
   }
 
-  // Get status color
   const getStatusColor = (status) => {
     if (!status) return "bg-gray-100 text-gray-800"
     switch (status.toLowerCase()) {
@@ -227,7 +213,6 @@ const AllApplicationsPage = () => {
     setSelectedDocument(null)
   }
 
-  // Document preview component
   const DocumentPreview = ({ document }) => {
     if (!document || !document.url) {
       return <div className="text-center text-gray-500 p-8">Document not available</div>
@@ -318,7 +303,6 @@ const AllApplicationsPage = () => {
     )
   }
 
-  // Loading state
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -330,7 +314,6 @@ const AllApplicationsPage = () => {
     )
   }
 
-  // Error state
   if (error) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -351,7 +334,6 @@ const AllApplicationsPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 p-4">
-      {/* Header */}
       <div className="mb-8">
         <h1 className="text-4xl font-bold text-gray-900 mb-2">SRA APPLICATION DOCUMENTS VIEWER</h1>
         <p className="text-gray-600 text-lg">
@@ -359,7 +341,6 @@ const AllApplicationsPage = () => {
         </p>
       </div>
 
-      {/* Search */}
       <div className="bg-white rounded-lg shadow-md p-6 mb-8">
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -375,7 +356,6 @@ const AllApplicationsPage = () => {
         </div>
       </div>
 
-      {/* Applications */}
       <div className="space-y-8">
         {filteredApplications.length === 0 ? (
           <div className="text-center py-12">
@@ -384,7 +364,6 @@ const AllApplicationsPage = () => {
         ) : (
           filteredApplications.map((app) => (
             <div key={app.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
-              {/* Header Section */}
               <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white p-6">
                 <div className="flex justify-between items-start">
                   <div>
@@ -416,7 +395,6 @@ const AllApplicationsPage = () => {
                 </div>
               </div>
 
-              {/* Documents Preview Section */}
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
                   📄 Documents ({getDocuments(app).length} files)
@@ -431,7 +409,6 @@ const AllApplicationsPage = () => {
                           <span className="text-xs bg-gray-100 px-2 py-1 rounded">{doc.extension.toUpperCase()}</span>
                         </div>
 
-                        {/* Document thumbnail/preview */}
                         <div className="mb-3">
                           {doc.isImage && (
                             <img
@@ -497,7 +474,6 @@ const AllApplicationsPage = () => {
                 )}
               </div>
 
-              {/* Quick Info */}
               <div className="bg-gray-50 px-6 py-4">
                 <div className="grid md:grid-cols-4 gap-4 text-sm">
                   <div>
@@ -519,7 +495,6 @@ const AllApplicationsPage = () => {
         )}
       </div>
 
-      {/* Document Modal */}
       {showDocumentModal && selectedDocument && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg max-w-6xl w-full max-h-[95vh] overflow-y-auto">
@@ -559,7 +534,6 @@ const AllApplicationsPage = () => {
         </div>
       )}
 
-      {/* Main Details Modal */}
       {showModal && selectedApplication && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-40">
           <div className="bg-white rounded-lg max-w-7xl w-full max-h-[95vh] overflow-y-auto">
@@ -573,7 +547,6 @@ const AllApplicationsPage = () => {
             </div>
 
             <div className="p-6 space-y-8">
-               {/* FAMILY MEMBERS SECTION */}
               <div>
                 <h3 className="text-2xl font-bold mb-4 bg-blue-100 text-blue-900 p-4 rounded-lg flex items-center gap-2">
                   👨‍👩‍👧‍👦 Family Members Details
@@ -599,7 +572,6 @@ const AllApplicationsPage = () => {
               </div>
               
 
-              {/* DOCUMENTS SECTION WITH PREVIEWS */}
               <div>
                 <h3 className="text-2xl font-bold mb-4 bg-green-100 text-green-900 p-4 rounded-lg flex items-center gap-2">
                   📄 All Documents & Media Files ({getDocuments(selectedApplication).length} files)
@@ -609,7 +581,6 @@ const AllApplicationsPage = () => {
                     <div key={index} className="border-2 border-green-200 rounded-lg p-4 bg-green-50">
                       <h4 className="font-bold text-green-900 capitalize text-sm mb-2">{doc.name}</h4>
 
-                      {/* Document preview thumbnail */}
                       <div className="mb-3">
                         {doc.isImage && (
                           <img
@@ -662,7 +633,6 @@ const AllApplicationsPage = () => {
                   ))}
                 </div>
               </div>
-              {/* ALL FIELDS DISPLAY */}
               <div>
                 <h3 className="text-2xl font-bold mb-6 text-center bg-gradient-to-r from-orange-500 to-red-500 text-white p-4 rounded-lg">
                   📋 ALL APPLICATION FIELDS ({Object.keys(selectedApplication).length} Total Fields)

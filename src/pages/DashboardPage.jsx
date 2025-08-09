@@ -3,13 +3,10 @@ import { useState, useEffect } from "react";
 import { Chart as ChartJS, ArcElement, BarElement, LineElement, PointElement, LinearScale, CategoryScale, Title, Tooltip, Legend } from "chart.js";
 import { Bar, Pie, Line } from "react-chartjs-2";
 
-// Register Chart.js components
 ChartJS.register(ArcElement, BarElement, LineElement, PointElement, LinearScale, CategoryScale, Title, Tooltip, Legend);
 
-// Configuration
-const API_BASE_URL = "http://localhost:4200";
+const API_BASE_URL = "http://13.203.251.59:4200";
 
-// Authentication utilities
 const getAuthToken = () => {
   if (typeof window === "undefined") return null;
   return localStorage.getItem("authToken");
@@ -20,7 +17,6 @@ const DashboardPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch dashboard data
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
@@ -60,7 +56,6 @@ const DashboardPage = () => {
     fetchDashboardData();
   }, []);
 
-  // Stats Card Component
   const StatsCard = ({ title, value, icon, colorClass = "bg-blue-500", trend = null }) => (
     <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200 transform hover:-translate-y-1">
       <div className="flex items-center justify-between">
@@ -78,7 +73,6 @@ const DashboardPage = () => {
     </div>
   );
 
-  // Chart configurations
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -111,7 +105,6 @@ const DashboardPage = () => {
     border: ["#2A8CC7", "#D44F6E", "#0A8F6A", "#D4A017", "#7F4FC3"],
   };
 
-  // Loading state
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-50">
@@ -123,7 +116,6 @@ const DashboardPage = () => {
     );
   }
 
-  // Error state
   if (error) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-50">
@@ -142,7 +134,6 @@ const DashboardPage = () => {
     );
   }
 
-  // No data state
   if (!dashboardData) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-50">
@@ -153,14 +144,12 @@ const DashboardPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      {/* Header */}
       <div className="mb-8 text-center">
         <h1 className="text-4xl font-bold text-gray-800 mb-2">📊 SRA Analytics Dashboard</h1>
         <p className="text-gray-600 text-lg">Real-time insights for Slum Redevelopment Authority applications</p>
       </div>
 
 
-      {/* Summary Section */}
       <div className="bg-white rounded-lg shadow-md p-6 mb-8">
         <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">📊 Executive Summary</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -182,7 +171,6 @@ const DashboardPage = () => {
           </div>
         </div>
       </div>
-      {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <StatsCard
           title="Total Records"
@@ -214,7 +202,6 @@ const DashboardPage = () => {
         />
       </div>
 
-      {/* Line Charts Section */}
       <div className="mb-12">
         <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">📈 Time Series Analysis</h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -259,7 +246,6 @@ const DashboardPage = () => {
         </div>
       </div>
 
-      {/* Horizontal Bar Charts Section */}
       <div className="mb-12">
         <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">📊 Categorical Analysis</h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
@@ -344,7 +330,6 @@ const DashboardPage = () => {
         </div>
       </div>
 
-      {/* Pie Charts Section */}
       <div className="mb-12">
         <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">🥧 Distribution Analysis</h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
@@ -423,7 +408,6 @@ const DashboardPage = () => {
 
       
 
-      {/* Footer */}
       <div className="bg-white rounded-lg shadow-md p-6 text-center">
         <p className="text-gray-600 text-sm">
           📅 Dashboard last updated: {new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} | 📊 Total Records: {dashboardData.totalRecords?.[0]?.count || 0}

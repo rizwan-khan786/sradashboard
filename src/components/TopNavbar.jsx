@@ -11,7 +11,6 @@ const TopNavbar = ({ user, onToggleSidebar }) => {
           </button>
           <div>
             <h1 className="text-lg font-semibold text-gray-900">SRA</h1>
-            {/* <p className="text-sm text-gray-500">Government Dashboard</p> */}
           </div>
         </div>
 
@@ -26,7 +25,6 @@ const TopNavbar = ({ user, onToggleSidebar }) => {
               <User className="h-4 w-4 text-white" />
             </div>
             <div className="hidden md:block">
-              {/* <p className="text-sm font-medium text-gray-900">{user?.name || "Admin User"}</p> */}
               <p className="text-xs text-gray-500">{user?.role || "Administrator"}</p>
             </div>
           </div>

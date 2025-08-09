@@ -35,7 +35,6 @@ function App() {
   const handleNavigation = (page, mode = "view") => {
     setCurrentPage(page)
     setCurrentMode(mode)
-    // Close sidebar on mobile after navigation
     setSidebarOpen(false)
   }
 
@@ -64,7 +63,6 @@ function App() {
     }
   }
 
-  // Show login page without sidebar
   if (currentPage === "login") {
     return (
       <div className="App">
@@ -74,7 +72,6 @@ function App() {
     )
   }
 
-  // Show scheme selection without sidebar
   if (currentPage === "scheme-selection") {
     return (
       <div className="App">
@@ -84,7 +81,6 @@ function App() {
     )
   }
 
-  // Show loading if not authenticated
   if (!isAuthenticated()) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -96,12 +92,10 @@ function App() {
     )
   }
 
-  // Main layout with sidebar
   return (
     <div className="App flex h-screen overflow-hidden bg-gray-50">
       <Toaster position="top-right" reverseOrder={false} />
 
-      {/* Desktop Sidebar */}
       <div className="hidden md:flex md:flex-shrink-0">
         <div className="flex flex-col w-64">
           <Sidebar
@@ -113,12 +107,9 @@ function App() {
         </div>
       </div>
 
-      {/* Mobile Sidebar */}
       <div className="md:hidden">
-        {/* Mobile Overlay */}
         {isSidebarOpen && <div className="fixed inset-0 z-40 bg-black bg-opacity-50" onClick={toggleSidebar} />}
 
-        {/* Mobile Sidebar */}
         <div
           className={`fixed inset-y-0 left-0 z-50 w-64 bg-white transform transition-transform duration-300 ease-in-out ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
             }`}
@@ -132,14 +123,9 @@ function App() {
         </div>
       </div>
 
-      {/* Main content */}
       <div className="flex flex-col w-0 flex-1 overflow-hidden">
         <TopNavbar user={user} onToggleSidebar={toggleSidebar} />
-        {/* <main className="flex-1 relative overflow-y-auto focus:outline-none">
-          <div className="py-6">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">{renderPage()}</div>
-          </div>
-        </main> */}
+       
         <main className="flex-1 overflow-y-auto focus:outline-none">
           {renderPage()}
         </main>

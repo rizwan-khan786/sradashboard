@@ -14,7 +14,6 @@ export default function SchemeSelectionPage({ onNavigate }) {
           <p className="text-gray-600 text-lg">Select whether you want to view or edit the dashboard</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-          {/* View Only Card */}
           <div className="bg-white rounded-xl shadow-lg p-8 flex flex-col justify-between">
             <div>
               <div className="w-14 h-14 bg-blue-500 rounded-lg flex items-center justify-center mb-5">
@@ -32,7 +31,6 @@ export default function SchemeSelectionPage({ onNavigate }) {
             </button>
           </div>
 
-          {/* Edit Card */}
           <div className="bg-white rounded-xl shadow-lg p-8 flex flex-col justify-between">
             <div>
               <div className="w-14 h-14 bg-green-500 rounded-lg flex items-center justify-center mb-5">

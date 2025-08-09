@@ -4,7 +4,7 @@ import { ArrowLeft, Mail, User, Shield } from "lucide-react"
 import axios from "axios"
 import { getAuthToken, isAuthenticated, removeAuthToken } from "../utils/auth"
 
-const BASE_URL = import.meta.env.VITE_BASE_URL || "http://localhost:4200"
+const BASE_URL = import.meta.env.VITE_BASE_URL || "http://13.203.251.59:4200"
 
 export default function ProfilePage({ onNavigate }) {
   const [user, setUser] = useState(null)
@@ -59,7 +59,6 @@ export default function ProfilePage({ onNavigate }) {
 
       <main className="flex-grow flex items-center justify-center px-4 pb-12">
         <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 sm:p-10 md:p-12">
-          {/* Profile Header */}
           <div className="flex items-center space-x-6 mb-8">
             <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center shadow-inner">
               <User className="w-10 h-10 text-orange-600" />
@@ -70,7 +69,6 @@ export default function ProfilePage({ onNavigate }) {
             </div>
           </div>
 
-          {/* Profile Details */}
           <div className="space-y-6 text-gray-700 text-base sm:text-lg">
             <div className="flex items-center space-x-3">
               <Mail className="h-5 w-5 text-orange-400" />

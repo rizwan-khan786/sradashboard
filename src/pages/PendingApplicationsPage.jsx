@@ -65,13 +65,11 @@ const PendingApplicationsPage = () => {
 
   return (
     <div>
-      {/* Header */}
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-900">Pending Applications</h1>
         <p className="text-gray-600">Review and process pending scheme applications</p>
       </div>
 
-      {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center">
@@ -104,7 +102,6 @@ const PendingApplicationsPage = () => {
         </div>
       </div>
 
-      {/* Bulk Actions */}
       {selectedApplications.length > 0 && (
         <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6">
           <div className="flex items-center justify-between">
@@ -127,7 +124,6 @@ const PendingApplicationsPage = () => {
         </div>
       )}
 
-      {/* Applications Table */}
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">

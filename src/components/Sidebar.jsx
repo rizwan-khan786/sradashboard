@@ -31,7 +31,6 @@ const Sidebar = ({ isCollapsed, currentPage, currentMode, onNavigate }) => {
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
     { id: "profile", label: "Profile", icon: User },
     { id: "all-applications", label: "All Applications", icon: FileText },
-    // { id: "pending-applications", label: "Pending Applications", icon: FileClock },
     { id: "edit-applications", label: "Edit Applications", icon: Edit3 },
     
   ]
@@ -46,7 +45,6 @@ const Sidebar = ({ isCollapsed, currentPage, currentMode, onNavigate }) => {
         isCollapsed ? "w-16" : "w-64"
       } flex flex-col h-full shadow-lg`}
     >
-      {/* Logo Section */}
       <div className="p-4 border-b border-gray-200">
         <div className="flex items-center space-x-3">
           {!isCollapsed && (
@@ -56,14 +54,12 @@ const Sidebar = ({ isCollapsed, currentPage, currentMode, onNavigate }) => {
               </div>
               <div>
                 <h2 className="text-sm font-bold text-gray-900">SRA</h2>
-                {/* <p className="text-xs text-gray-500">WCD Maharashtra</p> */}
               </div>
             </div>
           )}
         </div>
       </div>
 
-      {/* Back to Schemes */}
       <div className="p-4 border-b border-gray-200">
         <button
           onClick={() => onNavigate("scheme-selection")}
@@ -75,7 +71,6 @@ const Sidebar = ({ isCollapsed, currentPage, currentMode, onNavigate }) => {
         </button>
       </div>
 
-      {/* Navigation */}
       <nav className="flex-1 p-4">
         <ul className="space-y-2">
           {navigationItems.map((item) => (
@@ -97,7 +92,6 @@ const Sidebar = ({ isCollapsed, currentPage, currentMode, onNavigate }) => {
         </ul>
       </nav>
 
-      {/* Logout */}
       <div className="p-4 border-t border-gray-200">
         <button
           onClick={handleLogout}

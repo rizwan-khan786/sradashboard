@@ -3,11 +3,9 @@
 "use client"
 import { useState, useEffect } from "react"
 
-// Configuration
-const API_BASE_URL = "http://localhost:4200"
-const DOCUMENT_BASE_URL = "http://localhost:4200"
+const API_BASE_URL = "http://13.203.251.59:4200"
+const DOCUMENT_BASE_URL = "http://13.203.251.59:4200"
 
-// Authentication utilities
 const getAuthToken = () => {
   if (typeof window === "undefined") return null
   return localStorage.getItem("authToken")
@@ -23,7 +21,6 @@ const SRAEditForm = ({ applicationId }) => {
   const [success, setSuccess] = useState(null)
   const [activeTab, setActiveTab] = useState("personal")
 
-  // File field mapping
   const fileFieldsMap = {
     photo_self: "photo_self_path",
     photo_family: "photo_family_path",
@@ -44,7 +41,6 @@ const SRAEditForm = ({ applicationId }) => {
     Other_doc_info: "Other_doc_info",
   }
 
-  // Extract document path from full path
   const extractDocumentPath = (fullPath) => {
     if (!fullPath) return null
     const uploadsIndex = fullPath.indexOf("/uploads")
@@ -54,14 +50,12 @@ const SRAEditForm = ({ applicationId }) => {
     return fullPath
   }
 
-  // Get document URL
   const getDocumentUrl = (documentPath) => {
     if (!documentPath) return null
     const cleanPath = extractDocumentPath(documentPath)
     return cleanPath ? `${DOCUMENT_BASE_URL}${cleanPath}` : null
   }
 
-  // Check file type
   const getFileExtension = (filePath) => {
     if (!filePath) return ""
     return filePath.split(".").pop().toLowerCase()
@@ -72,7 +66,6 @@ const SRAEditForm = ({ applicationId }) => {
     return imageExtensions.includes(getFileExtension(filePath))
   }
 
-  // Fetch existing data
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -118,7 +111,6 @@ const SRAEditForm = ({ applicationId }) => {
     }
   }, [applicationId])
 
-  // Handle input change
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData((prev) => ({
@@ -127,7 +119,6 @@ const SRAEditForm = ({ applicationId }) => {
     }))
   }
 
-  // Handle file change
   const handleFileChange = (e) => {
     const { name, files: selectedFiles } = e.target
     if (selectedFiles && selectedFiles[0]) {
@@ -138,7 +129,6 @@ const SRAEditForm = ({ applicationId }) => {
     }
   }
 
-  // Submit form
   const handleSubmit = async (e) => {
     e.preventDefault()
     setSaving(true)
@@ -153,14 +143,12 @@ const SRAEditForm = ({ applicationId }) => {
 
       const formDataToSend = new FormData()
 
-      // Add text fields
       Object.keys(formData).forEach((key) => {
         if (formData[key] !== originalData[key]) {
           formDataToSend.append(key, formData[key] || "")
         }
       })
 
-      // Add files
       Object.keys(files).forEach((key) => {
         if (files[key]) {
           formDataToSend.append(key, files[key])
@@ -183,7 +171,6 @@ const SRAEditForm = ({ applicationId }) => {
       const result = await response.json()
       setSuccess("Application updated successfully!")
 
-      // Refresh data
       setTimeout(() => {
         window.location.reload()
       }, 2000)
@@ -220,20 +207,17 @@ const SRAEditForm = ({ applicationId }) => {
 
   return (
     <div className="min-h-screen bg-gray-50 p-4">
-      {/* Header */}
       <div className="mb-8">
         <h1 className="text-4xl font-bold text-gray-900 mb-2">Edit SRA Application</h1>
         <p className="text-gray-600 text-lg">Update your application details and documents - ID: {applicationId}</p>
       </div>
 
-      {/* Success/Error Messages */}
       {success && (
         <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">✅ {success}</div>
       )}
 
       {error && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">❌ {error}</div>}
 
-      {/* Tab Navigation */}
       <div className="bg-white rounded-lg shadow-md mb-6">
         <div className="flex border-b">
           <button
@@ -280,7 +264,6 @@ const SRAEditForm = ({ applicationId }) => {
       </div>
 
       <form onSubmit={handleSubmit}>
-        {/* Personal Details Tab */}
         {activeTab === "personal" && (
           <div className="bg-white rounded-lg shadow-md p-6 mb-6">
             <h2 className="text-2xl font-bold mb-6 text-gray-900">Personal Information</h2>
@@ -392,7 +375,6 @@ const SRAEditForm = ({ applicationId }) => {
               </div>
             </div>
 
-            {/* Address Section */}
             <h3 className="text-xl font-bold mt-8 mb-4 text-gray-900">Address Information</h3>
             <div className="grid md:grid-cols-2 gap-6">
               <div>
@@ -442,7 +424,6 @@ const SRAEditForm = ({ applicationId }) => {
               </div>
             </div>
 
-            {/* Bank Details */}
             <h3 className="text-xl font-bold mt-8 mb-4 text-gray-900">Bank Details</h3>
             <div className="grid md:grid-cols-3 gap-6">
               <div>
@@ -481,7 +462,6 @@ const SRAEditForm = ({ applicationId }) => {
           </div>
         )}
 
-        {/* Location & Property Tab */}
         {activeTab === "location" && (
           <div className="bg-white rounded-lg shadow-md p-6 mb-6">
             <h2 className="text-2xl font-bold mb-6 text-gray-900">Location & Property Details</h2>
@@ -592,7 +572,6 @@ const SRAEditForm = ({ applicationId }) => {
               </div>
             </div>
 
-            {/* Property Measurements */}
             <h3 className="text-xl font-bold mt-8 mb-4 text-gray-900">Property Measurements</h3>
             <div className="grid md:grid-cols-4 gap-6">
               <div>
@@ -669,7 +648,6 @@ const SRAEditForm = ({ applicationId }) => {
           </div>
         )}
 
-        {/* Family Details Tab */}
         {activeTab === "family" && (
           <div className="bg-white rounded-lg shadow-md p-6 mb-6">
             <h2 className="text-2xl font-bold mb-6 text-gray-900">Family Members</h2>
@@ -687,7 +665,6 @@ const SRAEditForm = ({ applicationId }) => {
               />
             </div>
 
-            {/* Family Members */}
             {[1, 2, 3, 4, 5, 6].map((memberNum) => (
               <div key={memberNum} className="border border-gray-200 rounded-lg p-4 mb-4">
                 <h3 className="text-lg font-semibold mb-4 text-gray-800">Family Member {memberNum}</h3>
@@ -747,7 +724,6 @@ const SRAEditForm = ({ applicationId }) => {
           </div>
         )}
 
-        {/* Documents Tab */}
         {activeTab === "documents" && (
           <div className="bg-white rounded-lg shadow-md p-6 mb-6">
             <h2 className="text-2xl font-bold mb-6 text-gray-900">Documents & Media</h2>
@@ -762,7 +738,6 @@ const SRAEditForm = ({ applicationId }) => {
                       .trim()}
                   </h3>
 
-                  {/* Current Document Preview */}
                   {formData[dbField] && (
                     <div className="mb-4">
                       <p className="text-sm text-gray-600 mb-2">Current Document:</p>
@@ -785,7 +760,6 @@ const SRAEditForm = ({ applicationId }) => {
                     </div>
                   )}
 
-                  {/* File Upload */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       {formData[dbField] ? "Replace Document:" : "Upload Document:"}
@@ -807,7 +781,6 @@ const SRAEditForm = ({ applicationId }) => {
           </div>
         )}
 
-        {/* Submit Button */}
         <div className="bg-white rounded-lg shadow-md p-6">
           <div className="flex justify-between items-center">
             <div className="text-sm text-gray-600">Make sure all information is correct before submitting.</div>
