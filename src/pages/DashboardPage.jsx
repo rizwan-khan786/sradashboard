@@ -5,7 +5,7 @@ import { Bar, Pie, Line } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, BarElement, LineElement, PointElement, LinearScale, CategoryScale, Title, Tooltip, Legend);
 
-const API_BASE_URL = "http://13.203.251.59:4200";
+const API_BASE_URL = "http://sra.saavi.co.in";
 
 const getAuthToken = () => {
   if (typeof window === "undefined") return null;

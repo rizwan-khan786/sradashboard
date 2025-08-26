@@ -3,8 +3,8 @@
 "use client"
 import { useState, useEffect } from "react"
 
-const API_BASE_URL = "http://13.203.251.59:4200"
-const DOCUMENT_BASE_URL = "http://13.203.251.59:4200"
+const API_BASE_URL = "http://sra.saavi.co.in"
+const DOCUMENT_BASE_URL = "http://sra.saavi.co.in"
 
 const getAuthToken = () => {
   if (typeof window === "undefined") return null
