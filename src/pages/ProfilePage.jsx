@@ -4,7 +4,7 @@ import { ArrowLeft, Mail, User, Shield } from "lucide-react"
 import axios from "axios"
 import { getAuthToken, isAuthenticated, removeAuthToken } from "../utils/auth"
 
-const BASE_URL = import.meta.env.VITE_BASE_URL || "http://sra.saavi.co.in"
+const BASE_URL = import.meta.env.VITE_BASE_URL || "https://sra.saavi.co.in"
 
 export default function ProfilePage({ onNavigate }) {
   const [user, setUser] = useState(null)

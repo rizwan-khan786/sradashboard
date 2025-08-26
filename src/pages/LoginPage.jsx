@@ -5,7 +5,7 @@ import axios from "axios"
 import toast, { Toaster } from "react-hot-toast"
 import { isAuthenticated, setAuthToken, removeAuthToken } from "../utils/auth"
 
-const LOGIN_URL = import.meta.env.VITE_BASE_URL || "http://sra.saavi.co.in"
+const LOGIN_URL = import.meta.env.VITE_BASE_URL || "https://sra.saavi.co.in"
 
 export default function LoginPage({ onNavigate, setUser }) {
   const [email, setEmail] = useState("")

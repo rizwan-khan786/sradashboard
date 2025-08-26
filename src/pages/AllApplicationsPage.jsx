@@ -1,8 +1,8 @@
 "use client"
 import { useState, useEffect } from "react"
 
-const API_BASE_URL = "http://sra.saavi.co.in"
-const DOCUMENT_BASE_URL = "http://sra.saavi.co.in" 
+const API_BASE_URL = "https://sra.saavi.co.in"
+const DOCUMENT_BASE_URL = "https://sra.saavi.co.in" 
 
 const isAuthenticated = () => {
   if (typeof window === "undefined") return false
@@ -34,11 +34,24 @@ const AllApplicationsPage = () => {
     return fullPath
   }
 
+  // const getDocumentUrl = (documentPath) => {
+  //   if (!documentPath) return null
+  //   const cleanPath = extractDocumentPath(documentPath)
+  //   return cleanPath ? `${cleanPath}` : null
+  // }
   const getDocumentUrl = (documentPath) => {
-    if (!documentPath) return null
-    const cleanPath = extractDocumentPath(documentPath)
-    return cleanPath ? `${DOCUMENT_BASE_URL}${cleanPath}` : null
-  }
+  if (!documentPath) return null
+
+  // Convert array-like string to proper string without brackets and quotes
+  const cleanPath = documentPath
+    .replace(/^\[|]$/g, '')  // remove [ and ] from start/end
+    .replace(/"/g, '')       // remove all double quotes
+
+  return cleanPath || null
+}
+
+// Output: https://sratoday.s3.ap-south-1.amazonaws.com/sra_uploads/photo_self-1756194086119.jpg,https://sratoday.s3.ap-south-1.amazonaws.com/sra_uploads/photo_self-1756194086232.jpg
+
 
   const getFileExtension = (filePath) => {
     if (!filePath) return ""
@@ -213,95 +226,193 @@ const AllApplicationsPage = () => {
     setSelectedDocument(null)
   }
 
-  const DocumentPreview = ({ document }) => {
-    if (!document || !document.url) {
-      return <div className="text-center text-gray-500 p-8">Document not available</div>
-    }
+  // const DocumentPreview = ({ document }) => {
+  //   if (!document || !document.url) {
+  //     return <div className="text-center text-gray-500 p-8">Document not available</div>
+  //   }
 
-    if (document.isImage) {
-      return (
-        <div className="text-center">
-          <img
-            src={document.url || "/placeholder.svg"}
-            alt={document.name}
-            className="max-w-full max-h-[70vh] mx-auto rounded-lg shadow-lg"
-            onError={(e) => {
-              e.target.style.display = "none"
-              e.target.nextSibling.style.display = "block"
-            }}
-          />
-          <div style={{ display: "none" }} className="text-red-500 p-4">
-            Failed to load image: {document.url}
-          </div>
-        </div>
-      )
-    }
+  //   if (document.isImage) {
+  //     return (
+  //       <div className="text-center">
+  //         <img
+  //           src={document.url || "/placeholder.svg"}
+  //           alt={document.name}
+  //           className="max-w-full max-h-[70vh] mx-auto rounded-lg shadow-lg"
+  //           onError={(e) => {
+  //             e.target.style.display = "none"
+  //             e.target.nextSibling.style.display = "block"
+  //           }}
+  //         />
+  //         <div style={{ display: "none" }} className="text-red-500 p-4">
+  //           Failed to load image: {document.url}
+  //         </div>
+  //       </div>
+  //     )
+  //   }
 
-    if (document.isVideo) {
-      return (
-        <div className="text-center">
-          <video
-            controls
-            className="max-w-full max-h-[70vh] mx-auto rounded-lg shadow-lg"
-            onError={(e) => {
-              e.target.style.display = "none"
-              e.target.nextSibling.style.display = "block"
-            }}
-          >
-            <source src={document.url} type={`video/${document.extension}`} />
-            Your browser does not support the video tag.
-          </video>
-          <div style={{ display: "none" }} className="text-red-500 p-4">
-            Failed to load video: {document.url}
-          </div>
-        </div>
-      )
-    }
+  //   if (document.isVideo) {
+  //     return (
+  //       <div className="text-center">
+  //         <video
+  //           controls
+  //           className="max-w-full max-h-[70vh] mx-auto rounded-lg shadow-lg"
+  //           onError={(e) => {
+  //             e.target.style.display = "none"
+  //             e.target.nextSibling.style.display = "block"
+  //           }}
+  //         >
+  //           <source src={document.url} type={`video/${document.extension}`} />
+  //           Your browser does not support the video tag.
+  //         </video>
+  //         <div style={{ display: "none" }} className="text-red-500 p-4">
+  //           Failed to load video: {document.url}
+  //         </div>
+  //       </div>
+  //     )
+  //   }
 
-    if (document.isPdf) {
-      return (
-        <div className="text-center">
-          <iframe
-            src={document.url}
-            className="w-full h-[70vh] rounded-lg shadow-lg"
-            title={document.name}
-            onError={(e) => {
-              e.target.style.display = "none"
-              e.target.nextSibling.style.display = "block"
-            }}
-          />
-          <div style={{ display: "none" }} className="text-red-500 p-4">
-            Failed to load PDF: {document.url}
-          </div>
-          <div className="mt-4">
-            <a
-              href={document.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-            >
-              Open PDF in New Tab
-            </a>
-          </div>
-        </div>
-      )
-    }
+  //   if (document.isPdf) {
+  //     return (
+  //       <div className="text-center">
+  //         <iframe
+  //           src={document.url}
+  //           className="w-full h-[70vh] rounded-lg shadow-lg"
+  //           title={document.name}
+  //           onError={(e) => {
+  //             e.target.style.display = "none"
+  //             e.target.nextSibling.style.display = "block"
+  //           }}
+  //         />
+  //         <div style={{ display: "none" }} className="text-red-500 p-4">
+  //           Failed to load PDF: {document.url}
+  //         </div>
+  //         <div className="mt-4">
+  //           <a
+  //             href={document.url}
+  //             target="_blank"
+  //             rel="noopener noreferrer"
+  //             className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+  //           >
+  //             Open PDF in New Tab
+  //           </a>
+  //         </div>
+  //       </div>
+  //     )
+  //   }
 
+  //   return (
+  //     <div className="text-center p-8">
+  //       <div className="text-6xl mb-4">📄</div>
+  //       <p className="text-gray-600 mb-4">File type: {document.extension.toUpperCase()}</p>
+  //       <a
+  //         href={document.url}
+  //         target="_blank"
+  //         rel="noopener noreferrer"
+  //         className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700"
+  //       >
+  //         Download File
+  //       </a>
+  //     </div>
+  //   )
+  // }
+  // Helper function to clean the URL string
+const cleanUrl = (url) => {
+  if (!url) return null
+  return url.replace(/^\[|]$/g, '').replace(/"/g, '')
+}
+
+const DocumentPreview = ({ document }) => {
+  if (!document || !document.url) {
+    return <div className="text-center text-gray-500 p-8">Document not available</div>
+  }
+
+  const url = cleanUrl(document.url) // clean the URL
+
+  if (document.isImage) {
     return (
-      <div className="text-center p-8">
-        <div className="text-6xl mb-4">📄</div>
-        <p className="text-gray-600 mb-4">File type: {document.extension.toUpperCase()}</p>
-        <a
-          href={document.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700"
-        >
-          Download File
-        </a>
+      <div className="text-center">
+        <img
+          src={url || "/placeholder.svg"}
+          alt={document.name}
+          className="max-w-full max-h-[70vh] mx-auto rounded-lg shadow-lg"
+          onError={(e) => {
+            e.target.style.display = "none"
+            e.target.nextSibling.style.display = "block"
+          }}
+        />
+        <div style={{ display: "none" }} className="text-red-500 p-4">
+          Failed to load image: {url}
+        </div>
       </div>
     )
   }
+
+  if (document.isVideo) {
+    return (
+      <div className="text-center">
+        <video
+          controls
+          className="max-w-full max-h-[70vh] mx-auto rounded-lg shadow-lg"
+          onError={(e) => {
+            e.target.style.display = "none"
+            e.target.nextSibling.style.display = "block"
+          }}
+        >
+          <source src={url} type={`video/${document.extension}`} />
+          Your browser does not support the video tag.
+        </video>
+        <div style={{ display: "none" }} className="text-red-500 p-4">
+          Failed to load video: {url}
+        </div>
+      </div>
+    )
+  }
+
+  if (document.isPdf) {
+    return (
+      <div className="text-center">
+        <iframe
+          src={url}
+          className="w-full h-[70vh] rounded-lg shadow-lg"
+          title={document.name}
+          onError={(e) => {
+            e.target.style.display = "none"
+            e.target.nextSibling.style.display = "block"
+          }}
+        />
+        <div style={{ display: "none" }} className="text-red-500 p-4">
+          Failed to load PDF: {url}
+        </div>
+        <div className="mt-4">
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+          >
+            Open PDF in New Tab
+          </a>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="text-center p-8">
+      <div className="text-6xl mb-4">📄</div>
+      <p className="text-gray-600 mb-4">File type: {document.extension.toUpperCase()}</p>
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700"
+      >
+        Download File
+      </a>
+    </div>
+  )
+}
+
 
   if (loading) {
     return (
